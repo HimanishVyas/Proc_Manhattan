@@ -17,6 +17,32 @@ from user.models import (
 )
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+
+    def get_user_image(self, user):
+        request = self.context.get("request")
+        photo_url = user.user_image.url
+        return request.build_absolute_uri(photo_url)
+
+    def create(self, validated_data):
+        return super().create(validated_data)
+
+
+class UserDepthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+        depth = 1
+
+
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -60,3 +86,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         # # send_otp_via_phone(user.phone)
         # print("-------------------------")
         return user
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(allow_null=True)
+    password = serializers.CharField(
+        write_only=True,
+        required=True,
+        style={"input_type": "password", "placeholder": "Password"},
+    )
