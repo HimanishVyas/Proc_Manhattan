@@ -1,3 +1,4 @@
 env
 migrations
 pycache
+__pycache__

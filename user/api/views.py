@@ -9,10 +9,15 @@ from rest_framework.viewsets import ViewSet
 from user.customs.permissions import ExceptDelete, ReadOnly
 from user.customs.viewsets import CustomViewSet
 
+from user.utilities.utils import (
+    get_tokens_for_user,
+)
+
 from user.api.serializer import (
     UserRegisterSerializer,
     UserListSerializer,
     LoginSerializer,
+    UserDepthSerializer,
 )
 
 from user.models import (
@@ -67,9 +72,7 @@ class LoginApi(ViewSet):
     def create(self, request):
 
         serializer = LoginSerializer(data=request.data)
-        print(serializer)
         if serializer.is_valid():
-            print(f"HAHAHHAHAHAHA {serializer.data}")
             email = serializer.data.get('email')
             password = serializer.validated_data["password"]
             # password = serializer.data.get('password')

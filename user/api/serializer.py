@@ -71,7 +71,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("confirm_password")
         user = super().create(validated_data)
-        print("user-------->>>>", user)
         user = User.objects.filter(id=user.id).first()
         # id = urlsafe_base64_encode(force_bytes(user.id))
         # token = PasswordResetTokenGenerator().make_token(user)
@@ -98,7 +97,7 @@ class LoginSerializer(serializers.Serializer):
     )
     
     class Meta:
-        fields = ('password', 'email',)
+        fields = ('password', 'email')
 
     # email = serializers.EmailField(max_length=50)
 

@@ -5,7 +5,7 @@ from django.core.mail import EmailMessage
 from dotenv import load_dotenv
 from twilio.rest import Client
 
-from apps.user.customs.authentications import (
+from user.customs.authentications import (
     create_access_token,
     create_refresh_token,
     decode_refresh_token,
