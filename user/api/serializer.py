@@ -89,9 +89,24 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField(allow_null=True)
+    # email = serializers.EmailField(allow_null=True)
+    email = serializers.EmailField()
     password = serializers.CharField(
         write_only=True,
         required=True,
         style={"input_type": "password", "placeholder": "Password"},
     )
+    
+    class Meta:
+        fields = ('password', 'email',)
+
+    # email = serializers.EmailField(max_length=50)
+
+    # class Meta:
+    #     model = User
+    #     fields = ('email', 'password',)
+    #     extra_kwargs = {
+    #         'password': {'write_only': True}
+    #     }
+
+
