@@ -65,36 +65,75 @@ class LoginApi(ViewSet):
 
 
     def create(self, request):
+
         serializer = LoginSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
-            email = serializer.validated_data["email"]
-            print("----------->>>>", email)
+            print(f"HAHAHHAHAHAHA {serializer.data}")
+            email = serializer.data.get('email')
             password = serializer.validated_data["password"]
-            print("----------->>>>", password)
+            # password = serializer.data.get('password')
+            user = User.objects.filter(email=email).first()            
             user = authenticate(email=email, password=password)
-            print("----------->>>>", user)
+            # logging.info("Login created.")
             if user:
                 # if not user.mobile_verify:
                 #     return Response(
-                #         {"message": "mobile number is not verified"},
+                #         {"msg": "mobile number is not verified"},
                 #         status=status.HTTP_200_OK,
-                #    )
-                if not user.email_verify:
-                    return Response(
-                        {"message": "Email is not verified"}, status=status.HTTP_200_OK
-                    )
-                user_serializer = UserDepthSerializer(user, context={"request": request})
-                if request.data.get("fcm_token"):
-                    user.fcm_token = request.data.get("fcm_token")
-                    user.save()
+                #     )
+                # if not user.email_verify:
+                #     return Response(
+                #         {"msg": "Email is not verified"}, status=status.HTTP_200_OK
+                #     )
+                user_serializer = UserDepthSerializer(user)
+                # user.fcm_token = serializer.validated_data["fcm_token"]
+                user.save()
                 token = get_tokens_for_user(user)
                 response = user_serializer.data
                 response["token"] = token
+                response = {"data": response, "status": status.HTTP_200_OK}
+                # logging.info("User created successfully")
                 return Response(response, status=status.HTTP_200_OK)
             return Response(
-                {"message": "Invalid Email or Password"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        else:
-            return Response({"error":"invalid data"}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            {
+                "message": "Invalid Email or Password HAHA",
+                "status": status.HTTP_400_BAD_REQUEST,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+        # serializer = LoginSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     email = serializer.validated_data["email"]
+        #     print("----------->>>>", email)
+        #     password = serializer.validated_data["password"]
+        #     print("----------->>>>", password)
+        #     user = authenticate(email=email, password=password)
+        #     print("----------->>>>", user)
+        #     if user:
+        #         # if not user.mobile_verify:
+        #         #     return Response(
+        #         #         {"message": "mobile number is not verified"},
+        #         #         status=status.HTTP_200_OK,
+        #         #    )
+        #         if not user.email_verify:
+        #             return Response(
+        #                 {"message": "Email is not verified"}, status=status.HTTP_200_OK
+        #             )
+        #         user_serializer = UserDepthSerializer(user, context={"request": request})
+        #         if request.data.get("fcm_token"):
+        #             user.fcm_token = request.data.get("fcm_token")
+        #             user.save()
+        #         token = get_tokens_for_user(user)
+        #         response = user_serializer.data
+        #         response["token"] = token
+        #         return Response(response, status=status.HTTP_200_OK)
+        #     return Response(
+        #         {"message": "Invalid Email or Password"},
+        #         status=status.HTTP_400_BAD_REQUEST,
+        #     )
+        # else:
+        #     return Response({"error":"invalid data"}, status=status.HTTP_400_BAD_REQUEST)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
