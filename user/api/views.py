@@ -58,7 +58,7 @@ class SignUpApi(ViewSet):
 
 class UserListApi(CustomViewSet):
     serializer_class = UserListSerializer
-    queryset = User.objects.filter(user_role = 1)
+    queryset = User.objects.all()
     permission_classes = [ReadOnly]
 
 
@@ -105,6 +105,8 @@ class LoginApi(ViewSet):
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
+
+
 
 
         # serializer = LoginSerializer(data=request.data)

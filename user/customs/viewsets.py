@@ -32,9 +32,7 @@ class CustomViewSet(ModelViewSet, SearchFilter):
 
     def list(self, request, *args, **kwargs):
         results = super().filter_queryset(queryset=self.get_queryset())
-        print("results: ", results)
         results = self.get_serializer(results, many=True).data
-        print(results)
         response = {"data": results}
         return Response(response, status=status.HTTP_200_OK)
 

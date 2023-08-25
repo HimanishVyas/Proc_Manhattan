@@ -11,7 +11,7 @@ from user.api.views import (
 router = DefaultRouter()
 router.register("signup", SignUpApi, basename="Sign Up API")
 router.register("login", LoginApi, basename="Login API")
-router.register("customer_list", UserListApi, basename="Customer list Api")
+router.register("user_list", UserListApi, basename="Customer list Api")
 
 
 
