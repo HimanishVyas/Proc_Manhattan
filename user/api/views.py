@@ -18,10 +18,19 @@ from user.api.serializer import (
     UserListSerializer,
     LoginSerializer,
     UserDepthSerializer,
+    AddAddressSerializer,
+    CountrySerializer,
+    StateSerializer,
+    DistrictSerializer,
 )
 
 from user.models import (
     User,
+    Address,
+    Country,
+    State,
+    District
+
 )
 
 # Create your views here.
@@ -44,7 +53,7 @@ class SignUpApi(ViewSet):
                 "message": "user created , Please check your email and mobile for verification",
                 "user_id": user.id,
                 "user_name": user.name,
-                # "user_phone": str(user.phone),
+                "user_phone": str(user.mobile),
                 "user_email": user.email,
                 "status": status.HTTP_201_CREATED,
             }
@@ -85,10 +94,10 @@ class LoginApi(ViewSet):
                 #         {"msg": "mobile number is not verified"},
                 #         status=status.HTTP_200_OK,
                 #     )
-                # if not user.email_verify:
-                #     return Response(
-                #         {"msg": "Email is not verified"}, status=status.HTTP_200_OK
-                #     )
+                if not user.email_verify:
+                    return Response(
+                        {"msg": "Email is not verified"}, status=status.HTTP_200_OK
+                    )
                 user_serializer = UserDepthSerializer(user)
                 # user.fcm_token = serializer.validated_data["fcm_token"]
                 user.save()
@@ -108,7 +117,22 @@ class LoginApi(ViewSet):
 
 
 
+class AddAddressApi(CustomViewSet):
+    serializer_class = AddAddressSerializer
+    queryset = Address.objects.all()
+    
+class CountryApi(CustomViewSet):
+    serializer_class = CountrySerializer
+    queryset = Country.objects.all()
+    
+class DistrictApi(CustomViewSet):
+    serializer_class = DistrictSerializer
+    queryset = District.objects.all()
 
+class StateApi(CustomViewSet):
+    serializer_class = StateSerializer
+    queryset = State.objects.all()
+    
         # serializer = LoginSerializer(data=request.data)
         # if serializer.is_valid():
         #     email = serializer.validated_data["email"]

@@ -14,6 +14,11 @@ from rest_framework import serializers
 # from apps.user.customs.authentications import decode_access_token
 from user.models import (
     User,
+    Address,
+    District,
+    State,
+    Country
+
 )
 
 
@@ -109,3 +114,23 @@ class LoginSerializer(serializers.Serializer):
     #     }
 
 
+
+class AddAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = "__all__"
+
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = "__all__"
+
+class DistrictSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        fields = "__all__"
+
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = State
+        fields = "__all__"

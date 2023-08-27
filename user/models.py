@@ -56,7 +56,7 @@ class Address(models.Model):
         "user.Country", verbose_name=_("Country FK"), on_delete=models.CASCADE
     )
     states = models.ForeignKey(
-        "user.States", verbose_name=_("State FK"), on_delete=models.CASCADE
+        "user.State", verbose_name=_("State FK"), on_delete=models.CASCADE
     )
     district = models.ForeignKey(
         "user.District", verbose_name=_("District FK"), on_delete=models.CASCADE
@@ -75,7 +75,7 @@ class Country(models.Model):
         return str(self.country)
 
 
-class States(models.Model):
+class State(models.Model):
     country_fk = models.ForeignKey(
         Country,
         verbose_name=_("country FK"),
@@ -84,16 +84,16 @@ class States(models.Model):
         blank=True,
         related_name="state",
     )
-    states = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
 
     def __str__(self):
-        return str(self.states)
+        return str(self.state)
 
 
 class District(models.Model):
     state_fk = models.ForeignKey(
-        States,
-        verbose_name=_("country FK"),
+        State,
+        verbose_name=_("State FK"),
         on_delete=models.CASCADE,
         null=True,
         blank=True,
