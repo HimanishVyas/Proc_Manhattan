@@ -22,6 +22,7 @@ from user.api.serializer import (
     CountrySerializer,
     StateSerializer,
     DistrictSerializer,
+    ChangePasswordSerializer,
 )
 
 from user.models import (
@@ -114,6 +115,25 @@ class LoginApi(ViewSet):
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
+
+# -------------ChangePasswordApi-------------
+
+
+class ChangePasswordApi(ViewSet):
+
+    def create(self, request):
+        print(request.user.email)
+        serializer = ChangePasswordSerializer(
+            data=request.data, context={"user_email": request.user.email}
+        )
+        if serializer.is_valid():
+            return Response(
+                {"message": "password changed succesfully"}, status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {"message": "Somthig went wrong"}, status=status.HTTP_403_FORBIDDEN
+            )
 
 
 

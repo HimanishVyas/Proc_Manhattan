@@ -6,6 +6,8 @@ from user.api.views import (
     SignUpApi,
     LoginApi,
     UserListApi,
+    ChangePasswordApi,
+
     AddAddressApi,
     StateApi,
     DistrictApi,
@@ -16,6 +18,8 @@ router = DefaultRouter()
 router.register("signup", SignUpApi, basename="Sign Up API")
 router.register("login", LoginApi, basename="Login API")
 router.register("user_list", UserListApi, basename="Customer list Api")
+router.register("change_password", ChangePasswordApi, basename="Change Password Api")
+
 router.register("address", AddAddressApi, basename="Add Address Api")
 router.register("state", StateApi, basename="state Api")
 router.register("country", CountryApi, basename="country Api")
