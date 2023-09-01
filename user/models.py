@@ -25,7 +25,7 @@ class User(AbstractBaseUser):
         default="media/user/user_318-159711.png",
     )
     user_role = models.PositiveSmallIntegerField(
-        _("User Role"), choices=UserRoleChoices.choices, default=3
+        _("User Role"), choices=UserRoleChoices.choices
     )
     is_staff = models.BooleanField(_("Staff Status"), default=False)
     is_superuser = models.BooleanField(_("Superuser Status"), default=False)
