@@ -25,7 +25,7 @@ class User(AbstractBaseUser):
         default="media/user/user_318-159711.png",
     )
     user_role = models.PositiveSmallIntegerField(
-        _("User Role"), choices=UserRoleChoices.choices, default=3
+        _("User Role"), choices=UserRoleChoices.choices
     )
     is_staff = models.BooleanField(_("Staff Status"), default=False)
     is_superuser = models.BooleanField(_("Superuser Status"), default=False)
@@ -47,3 +47,59 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return str(self.email)
+
+
+class Address(models.Model):
+    user_fk = models.ForeignKey(User, verbose_name=_("User FK"), on_delete=models.SET_NULL, null=True, blank=True, related_name="User_fk")
+    address = models.TextField(_("Address"))
+    country = models.ForeignKey(
+        "user.Country", verbose_name=_("Country FK"), on_delete=models.CASCADE
+    )
+    states = models.ForeignKey(
+        "user.State", verbose_name=_("State FK"), on_delete=models.CASCADE
+    )
+    district = models.ForeignKey(
+        "user.District", verbose_name=_("District FK"), on_delete=models.CASCADE
+    )
+    city = models.CharField(_("City"), max_length=50)
+    pincode = models.CharField(_("PinCode"), max_length=50)
+    is_active = models.BooleanField(_("Is Active"), default=True)
+    def __str__(self):
+        return str(self.address)
+
+
+class Country(models.Model):
+    country = models.CharField(max_length=256)
+
+    def __str__(self):
+        return str(self.country)
+
+
+class State(models.Model):
+    country_fk = models.ForeignKey(
+        Country,
+        verbose_name=_("country FK"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="state",
+    )
+    state = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.state)
+
+
+class District(models.Model):
+    state_fk = models.ForeignKey(
+        State,
+        verbose_name=_("State FK"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="country",
+    )
+    district = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.district)

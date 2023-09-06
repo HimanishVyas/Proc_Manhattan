@@ -50,7 +50,7 @@ def send_otp_via_phone(mobile):
     phone_number = mobile
     my_otp = random.randint(1111, 9999)
     client.messages.create(
-        body=f"Hi,Welcome to NVC CRM ,{my_otp} is your one time password to proceed on NuVu. Do not share your OTP with anyone.",
+        body=f"Your one time password to proceed on manhattan is {my_otp}. Do not share your OTP with anyone.",
         from_=os.getenv("twilio_no"),
         to=f"{phone_number}",
     )

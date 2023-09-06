@@ -14,6 +14,11 @@ from rest_framework import serializers
 # from apps.user.customs.authentications import decode_access_token
 from user.models import (
     User,
+    Address,
+    District,
+    State,
+    Country
+
 )
 
 
@@ -107,5 +112,49 @@ class LoginSerializer(serializers.Serializer):
     #     extra_kwargs = {
     #         'password': {'write_only': True}
     #     }
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(style={"input_type": "password"})
+    new_password = serializers.CharField(style={"input_type": "password"})
+    confirm_password = serializers.CharField(style={"input_type": "password"})
+
+    def validate(self, attrs):
+        oldpassword = attrs.get("old_password")
+        newpassword = attrs.get("new_password")
+        confirmpassword = attrs.get("confirm_password")
+        user = authenticate(email=self.context.get("user_email"), password=oldpassword)
+        if user is None:
+            raise serializers.ValidationError({"Error": "old Password didn't Match"})
+        if newpassword != confirmpassword:
+            raise serializers.ValidationError(
+                {"Error": "Passwords and confirm passwords are not match"}
+            )
+        user.set_password(newpassword)
+        user.is_pass_changed = True
+        user.save()
+
+        return super().validate(attrs)
+
+
+class AddAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = "__all__"
+
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = "__all__"
+
+class DistrictSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        fields = "__all__"
+
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = State
+        fields = "__all__"
+
 
 
