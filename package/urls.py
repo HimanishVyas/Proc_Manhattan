@@ -14,4 +14,4 @@ router.register("add_business", AddBusinessAPI, basename="Add Business API")
 
 urlpatterns = [
     # path("package/", views.view, name = "test"),
-]
+] + router.urls

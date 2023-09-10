@@ -11,17 +11,20 @@ from package.utilities.choices import BusinessChoice
 
 class Business(models.Model):
     user_fk = models.ForeignKey(User, verbose_name="Vender", on_delete = models.CASCADE, related_name="hall_renter")
-    business_name = models.CharField(_('Hall Name'),max_length=256)
+    business_name = models.CharField(_('Business Name'),max_length=256)
+    # business_type = models.PositiveSmallIntegerField(
+    #     _("Business Type"), choices=BusinessChoice.choices,
+    #     null=True, blank=True
+    # )
     business_type = models.PositiveSmallIntegerField(
-        _("Business Type"), choices=BusinessChoice.choices,
-        null=True, blank=True
+        _("Business Type"), choices=BusinessChoice.choices
     )
     # ----------package_preference----------
-    premium = models.BooleanField(_('Premium'), null=True, blank=True)  # 50 lak +
-    economical = models.BooleanField(_('Economical'), null=True, blank=True) # 10 to 50
-    budget = models.BooleanField(_('Budget'), null=True, blank=True) # Under 10
+    # premium = models.BooleanField(_('Premium'), null=True, blank=True)  # 50 lak +
+    # economical = models.BooleanField(_('Economical'), null=True, blank=True) # 10 to 50
+    # budget = models.BooleanField(_('Budget'), null=True, blank=True) # Under 10
 
-    business_address = models.CharField(_('Hall Address'), null=True, blank=True, max_length=200)
+    business_address = models.CharField(_('Business Address'), null=True, blank=True, max_length=200)
     country = models.ForeignKey(
         "user.Country", verbose_name=_("Country FK"), on_delete=models.CASCADE
     )
