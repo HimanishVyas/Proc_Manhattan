@@ -11,7 +11,7 @@ from package.utilities.choices import BusinessChoice
 
 class Business(models.Model):
     user_fk = models.ForeignKey(User, verbose_name="Vender", on_delete = models.CASCADE, related_name="hall_renter")
-    business_name = models.CharField(_('Business Name'),max_length=256)
+    business_name = models.CharField(_('Business Name'),max_length=256, unique=True)
     # business_type = models.PositiveSmallIntegerField(
     #     _("Business Type"), choices=BusinessChoice.choices,
     #     null=True, blank=True

@@ -13,3 +13,9 @@ class AddBusinessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Business
         fields = "__all__"
+
+class BusinessListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Business
+        fields = "__all__"
+        depth = 1

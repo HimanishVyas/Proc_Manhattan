@@ -14,6 +14,7 @@ from package.customs.permissions import (
 
 from package.api.serializer import (
     AddBusinessSerializer,
+    BusinessListSerializer,
 )
 
 from package.models import (
@@ -23,8 +24,8 @@ from package.models import (
 # Create your views here.
 
 class AddBusinessAPI(CustomViewSet):
+    serializer_class = BusinessListSerializer
     queryset = Business.objects.all()
-    serializer_class = AddBusinessSerializer
     permission_classes = [IsVendor]
         
     def create(self, request):
@@ -42,3 +43,5 @@ class AddBusinessAPI(CustomViewSet):
             return Response(response, status=status.HTTP_201_CREATED)
         else:
             return Response(business_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def list(self, request):
