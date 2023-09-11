@@ -15,10 +15,13 @@ from package.customs.permissions import (
 from package.api.serializer import (
     AddBusinessSerializer,
     BusinessListSerializer,
+    AddFrenchiesSerializer,
+    FrenchiesListSerializer,
 )
 
 from package.models import (
     Business,
+    Frenchies,
 )
 
 # Create your views here.
@@ -45,3 +48,26 @@ class AddBusinessAPI(CustomViewSet):
             return Response(business_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # def list(self, request):
+
+
+class AddFrenchiesAPI(CustomViewSet):
+    serializer_class = FrenchiesListSerializer
+    queryset = Frenchies.objects.all()
+    permission_classes = [IsVendor]
+
+    def create(self, request):
+
+        business = Business.objects.get(user_fk = request.user).id
+        print("business--------------->>>>>", business)
+        request.data['business_fk'] = business
+
+        frenchies_serializer = AddFrenchiesSerializer(data=request.data)
+        if frenchies_serializer.is_valid(raise_exception=True):
+            frenchies_serializer.save()
+            response = {
+                "message": "Business Ragisterd",
+                "status": status.HTTP_201_CREATED
+            }
+            return Response(response, status=status.HTTP_201_CREATED)
+        else:
+            return Response(frenchies_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

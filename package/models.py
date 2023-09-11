@@ -42,6 +42,29 @@ class Business(models.Model):
         return str(self.business_name)
 
 
+class Frenchies(models.Model):
+
+    business_fk = models.ForeignKey(Business, verbose_name="Business", on_delete = models.CASCADE, related_name="business")
+    frenchies_name = models.CharField(verbose_name="Frenchies Name", max_length=200, null=True, blank=True)
+    frenchies_address = models.CharField(_('Frenchies Address'), null=True, blank=True, max_length=200)
+    price_par_wedding = models.IntegerField(verbose_name="Price Par Wedding", null=True, blank=True)
+    area = models.CharField(_("Area"), null=True, blank=True, max_length=100)
+    country = models.ForeignKey(
+        "user.Country", verbose_name=_("Country FK"), on_delete=models.CASCADE
+    )
+    states = models.ForeignKey(
+        "user.State", verbose_name=_("State FK"), on_delete=models.CASCADE
+    )
+    district = models.ForeignKey(
+        "user.District", verbose_name=_("District FK"), on_delete=models.CASCADE
+    )
+    contect_no = models.CharField(_('Contect Number'), max_length=13)
+
+    is_active = models.BooleanField(_("Is Active"), default=True)
+
+    def __str__(self):
+        return self.frenchies_name
+
 class Package(models.Model):
     pass
     # business_fk = models.ForeignKey(Business, verbose_name="Business", on_delete=models.CASCADE, related_name="Business" )
