@@ -17,11 +17,14 @@ from package.api.serializer import (
     BusinessListSerializer,
     AddFrenchiesSerializer,
     FrenchiesListSerializer,
+    AddPackageSerializer,
+
 )
 
 from package.models import (
     Business,
     Frenchies,
+    Package
 )
 
 # Create your views here.
@@ -56,10 +59,9 @@ class AddFrenchiesAPI(CustomViewSet):
     permission_classes = [IsVendor]
 
     def create(self, request):
-
-        business = Business.objects.get(user_fk = request.user).id
-        print("business--------------->>>>>", business)
-        request.data['business_fk'] = business
+        if request.user.user_role == 2:
+            business = Business.objects.get(user_fk = request.user).id
+            request.data['business_fk'] = business
 
         frenchies_serializer = AddFrenchiesSerializer(data=request.data)
         if frenchies_serializer.is_valid(raise_exception=True):
@@ -71,3 +73,8 @@ class AddFrenchiesAPI(CustomViewSet):
             return Response(response, status=status.HTTP_201_CREATED)
         else:
             return Response(frenchies_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class AddPackageAPI(CustomViewSet):
+    serializer_class = AddPackageSerializer
+    queryset = Package.objects.all()
+
+    # def create(self, request):

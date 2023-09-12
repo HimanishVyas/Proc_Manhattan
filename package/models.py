@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 from user.models import *
-from package.utilities.choices import BusinessChoice
+from package.utilities.choices import BusinessChoice, PackageTypeChoice
 # class package(models.Model):
 #     pass
 
@@ -47,7 +47,7 @@ class Frenchies(models.Model):
     business_fk = models.ForeignKey(Business, verbose_name="Business", on_delete = models.CASCADE, related_name="business")
     frenchies_name = models.CharField(verbose_name="Frenchies Name", max_length=200, null=True, blank=True)
     frenchies_address = models.CharField(_('Frenchies Address'), null=True, blank=True, max_length=200)
-    price_par_wedding = models.IntegerField(verbose_name="Price Par Wedding", null=True, blank=True)
+    price_par_wedding = models.FloatField(verbose_name="Price Par Wedding", null=True, blank=True)
     area = models.CharField(_("Area"), null=True, blank=True, max_length=100)
     country = models.ForeignKey(
         "user.Country", verbose_name=_("Country FK"), on_delete=models.CASCADE
@@ -58,7 +58,8 @@ class Frenchies(models.Model):
     district = models.ForeignKey(
         "user.District", verbose_name=_("District FK"), on_delete=models.CASCADE
     )
-    contect_no = models.CharField(_('Contect Number'), max_length=13)
+    contect_no = models.CharField(_('Contect Number'), max_length=13, unique=True)
+    is_contect_no_verified = models.BooleanField(_("Is Contect No Active"), default=True)
 
     is_active = models.BooleanField(_("Is Active"), default=True)
 
@@ -66,8 +67,13 @@ class Frenchies(models.Model):
         return self.frenchies_name
 
 class Package(models.Model):
-    pass
-    # business_fk = models.ForeignKey(Business, verbose_name="Business", on_delete=models.CASCADE, related_name="Business" )
+
+    vender = models.ManyToManyField(Frenchies, verbose_name=_("Frenchies"))
+    package_type = models.PositiveSmallIntegerField(
+        _("Package Type"), choices=PackageTypeChoice.choices
+    )
+    package_price = models.FloatField(verbose_name="Package Price", null=True, blank=True)
+    is_active = models.BooleanField(_("Is Active"), default=True)
 
 
 
