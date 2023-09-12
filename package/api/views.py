@@ -56,10 +56,9 @@ class AddFrenchiesAPI(CustomViewSet):
     permission_classes = [IsVendor]
 
     def create(self, request):
-
-        business = Business.objects.get(user_fk = request.user).id
-        print("business--------------->>>>>", business)
-        request.data['business_fk'] = business
+        if request.user.user_role == 2:
+            business = Business.objects.get(user_fk = request.user).id
+            request.data['business_fk'] = business
 
         frenchies_serializer = AddFrenchiesSerializer(data=request.data)
         if frenchies_serializer.is_valid(raise_exception=True):
