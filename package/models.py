@@ -59,7 +59,7 @@ class Frenchies(models.Model):
         "user.District", verbose_name=_("District FK"), on_delete=models.CASCADE
     )
     contect_no = models.CharField(_('Contect Number'), max_length=13, unique=True)
-    is_contect_no_verified = models.BooleanField(_("Is Active"), default=True)
+    is_contect_no_verified = models.BooleanField(_("Is Contect No Active"), default=True)
 
     is_active = models.BooleanField(_("Is Active"), default=True)
 
@@ -68,15 +68,13 @@ class Frenchies(models.Model):
 
 class Package(models.Model):
 
-    vender = models.ManyToManyField(Frenchies, verbose_name=_("Country FK"))
+    vender = models.ManyToManyField(Frenchies, verbose_name=_("Frenchies"))
     package_type = models.PositiveSmallIntegerField(
         _("Package Type"), choices=PackageTypeChoice.choices
     )
     package_price = models.FloatField(verbose_name="Package Price", null=True, blank=True)
     is_active = models.BooleanField(_("Is Active"), default=True)
 
-    def __str__(self):
-        return self.id
 
 
 

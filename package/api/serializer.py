@@ -8,6 +8,7 @@ from rest_framework import serializers
 from package.models import (
     Business,
     Frenchies,
+    Package,
 )
 
 class AddBusinessSerializer(serializers.ModelSerializer):
@@ -33,3 +34,8 @@ class FrenchiesListSerializer(serializers.ModelSerializer):
         model = Frenchies
         fields = "__all__"
         depth = 1
+
+class AddPackageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Frenchies
+        fields = "__all__"
