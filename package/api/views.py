@@ -15,15 +15,16 @@ from package.customs.permissions import (
 from package.api.serializer import (
     AddBusinessSerializer,
     BusinessListSerializer,
-    AddFrenchiesSerializer,
-    FrenchiesListSerializer,
-    AddPackageSerializer,
+    # AddFrenchiesSerializer,
+    # FrenchiesListSerializer,
+    # AddPackageSerializer,
+    PackageListSerializer,
 
 )
 
 from package.models import (
     Business,
-    Frenchies,
+    # Frenchies,
     Package
 )
 
@@ -53,28 +54,35 @@ class AddBusinessAPI(CustomViewSet):
     # def list(self, request):
 
 
-class AddFrenchiesAPI(CustomViewSet):
-    serializer_class = FrenchiesListSerializer
-    queryset = Frenchies.objects.all()
-    permission_classes = [IsVendor]
-
-    def create(self, request):
-        if request.user.user_role == 2:
-            business = Business.objects.get(user_fk = request.user).id
-            request.data['business_fk'] = business
-
-        frenchies_serializer = AddFrenchiesSerializer(data=request.data)
-        if frenchies_serializer.is_valid(raise_exception=True):
-            frenchies_serializer.save()
-            response = {
-                "message": "Business Ragisterd",
-                "status": status.HTTP_201_CREATED
-            }
-            return Response(response, status=status.HTTP_201_CREATED)
-        else:
-            return Response(frenchies_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-class AddPackageAPI(CustomViewSet):
-    serializer_class = AddPackageSerializer
-    queryset = Package.objects.all()
+# class AddFrenchiesAPI(CustomViewSet):
+#     serializer_class = FrenchiesListSerializer
+#     queryset = Frenchies.objects.all()
+#     permission_classes = [IsVendor]
+#
+#     def create(self, request):
+#         if request.user.user_role == 2:
+#             business = Business.objects.get(user_fk = request.user).id
+#             request.data['business_fk'] = business
+#
+#         frenchies_serializer = AddFrenchiesSerializer(data=request.data)
+#         if frenchies_serializer.is_valid(raise_exception=True):
+#             frenchies_serializer.save()
+#             response = {
+#                 "message": "Business Ragisterd",
+#                 "status": status.HTTP_201_CREATED
+#             }
+#             return Response(response, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(frenchies_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class AddPackageAPI(CustomViewSet):
+#     serializer_class = AddPackageSerializer
+#     queryset = Package.objects.all()
 
     # def create(self, request):
+
+class PackageListAPI(CustomViewSet):
+    serializer_class = PackageListSerializer
+    queryset = Package.objects.all()
+    permission_classes = [IsCustomer]
+
+

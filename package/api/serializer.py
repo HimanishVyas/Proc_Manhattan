@@ -7,7 +7,7 @@ from rest_framework import serializers
 
 from package.models import (
     Business,
-    Frenchies,
+    # Frenchies,
     Package,
 )
 
@@ -23,19 +23,25 @@ class BusinessListSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class AddFrenchiesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Frenchies
-        fields = "__all__"
+# class AddFrenchiesSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Frenchies
+#         fields = "__all__"
 
 
-class FrenchiesListSerializer(serializers.ModelSerializer):
+# class FrenchiesListSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Frenchies
+#         fields = "__all__"
+#         depth = 1
+
+# class AddPackageSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Frenchies
+#         fields = "__all__"
+
+class PackageListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Frenchies
+        model = Package
         fields = "__all__"
         depth = 1
-
-class AddPackageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Frenchies
-        fields = "__all__"
