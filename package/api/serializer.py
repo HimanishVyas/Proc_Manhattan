@@ -9,12 +9,47 @@ from package.models import (
     Business,
     # Frenchies,
     Package,
+    Hall,
+    Catress
 )
 
+
+# _________addition Serializers_________
 class AddBusinessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Business
         fields = "__all__"
+
+
+class AddHallSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hall
+        fields = "__all__"
+
+
+class AddCatressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Catress
+        fields = "__all__"
+
+
+# class AddFrenchiesSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Frenchies
+#         fields = "__all__"'
+
+# class AddPackageSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Frenchies
+#         fields = "__all__"
+
+# _________List Serializers_________
+
+# class FrenchiesListSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Frenchies
+#         fields = "__all__"
+#         depth = 1
 
 class BusinessListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,22 +58,19 @@ class BusinessListSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-# class AddFrenchiesSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Frenchies
-#         fields = "__all__"
+class HallListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Package
+        fields = "__all__"
+        depth = 1
 
 
-# class FrenchiesListSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Frenchies
-#         fields = "__all__"
-#         depth = 1
+class CatressListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Catress
+        fields = "__all__"
+        depth = 1
 
-# class AddPackageSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Frenchies
-#         fields = "__all__"
 
 class PackageListSerializer(serializers.ModelSerializer):
     class Meta:
