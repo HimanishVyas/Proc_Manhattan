@@ -6,5 +6,4 @@ from package.models import (
 )
 
 def create_update_package(self, request):
-
-    if Package.objects.all()
+    pass
