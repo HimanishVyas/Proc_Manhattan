@@ -96,11 +96,12 @@ class AddCatressAPI(CustomViewSet):
 
     def create(self, request):
         data = request.data
+        print("------->>>>", data)
         if request.user.user_role == 2:
             business = Business.objects.get(user_fk=request.user, business_type=2).id
             request.data['business_fk'] = business
         # ---->> total_price logic here
-        data["total_price"] = (data["price_par_plate"] * data["plate_count"] * data["capacity"]) * 4
+        data["total_price"] = (data["price_par_plate"] * data["capacity"]) + 35000
 
         # ---->>package package_preference logic here
         if data["total_price"] <= 100000:

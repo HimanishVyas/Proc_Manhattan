@@ -67,11 +67,10 @@ class Catress(models.Model):
     business_fk = models.ForeignKey(Business, verbose_name="Business", on_delete=models.CASCADE)
     catress_name = models.CharField(verbose_name="Catress Name", max_length=200)
     capacity = models.IntegerField(verbose_name="People capacity")
-    plates = models.IntegerField(verbose_name="Plates Count")
     address = models.CharField(_('Catress Address'), max_length=200)
     price_par_plate = models.FloatField(verbose_name="Price Par Plate")
-    plate_count = models.IntegerField(verbose_name="Plate Count")
-    total_price = models.IntegerField(verbose_name="Total Price", null=True,
+    # plate_count = models.IntegerField(verbose_name="Plate Count")
+    total_price = models.IntegerField(verbose_name="Price", null=True,
                                       blank=True)  # total_price = plate_count * price_par_plate
     package_preference = models.PositiveSmallIntegerField(_("Package Preference"), choices=PackageTypeChoice.choices)
     area = models.CharField(_("Area"), max_length=100)
