@@ -11,7 +11,7 @@ from package.customs.permissions import (
     IsCustomer,
     IsVendor
 )
-
+from package.utilities.create_package import create_package
 from package.api.serializer import (
     AddBusinessSerializer,
     AddHallSerializer,
@@ -65,7 +65,6 @@ class AddHallAPI(CustomViewSet):
 
     def create(self, request):
         data = request.data
-        print(data)
         if request.user.user_role == 2:
             business = Business.objects.get(user_fk=request.user, business_type=1).id
             request.data['business_fk'] = business
@@ -80,6 +79,11 @@ class AddHallAPI(CustomViewSet):
         hall_serializer = AddHallSerializer(data=request.data)
         if hall_serializer.is_valid(raise_exception=True):
             hall_serializer.save()
+
+            hall = Hall.objects.all().last().id
+            print("Hall ------>>>", Hall)
+            create_package(hall=Hall)
+
             response = {
                 "message": "Hall Registered",
                 "status": status.HTTP_201_CREATED
