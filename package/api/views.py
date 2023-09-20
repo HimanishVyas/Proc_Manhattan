@@ -82,7 +82,6 @@ class AddHallAPI(CustomViewSet):
 
             # hall_id = Hall.objects.all().last().id
             hall = Hall.objects.all().last()
-            print("Hall ------>>>", hall)
             create_package(hall)
             # create_package(hall=hall)
 
@@ -102,7 +101,6 @@ class AddCatressAPI(CustomViewSet):
 
     def create(self, request):
         data = request.data
-        print("------->>>>", data)
         if request.user.user_role == 2:
             business = Business.objects.get(user_fk=request.user, business_type=2).id
             request.data['business_fk'] = business

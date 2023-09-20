@@ -42,11 +42,8 @@ class SignUpApi(ViewSet):
     authentication_classes = []
 
     def create(self, request):
-        print("-------------hello-------------")
         serializer = UserRegisterSerializer(
             data=request.data, context={"host": request.META["HTTP_HOST"]}
-            # data=request.data
-
         )
         if serializer.is_valid():
             user = serializer.save()
@@ -100,13 +97,11 @@ class LoginApi(ViewSet):
                         {"msg": "Email is not verified"}, status=status.HTTP_200_OK
                     )
                 user_serializer = UserDepthSerializer(user)
-                # user.fcm_token = serializer.validated_data["fcm_token"]
                 user.save()
                 token = get_tokens_for_user(user)
                 response = user_serializer.data
                 response["token"] = token
                 response = {"data": response, "status": status.HTTP_200_OK}
-                # logging.info("User created successfully")
                 return Response(response, status=status.HTTP_200_OK)
             return Response(
             {
@@ -122,7 +117,6 @@ class LoginApi(ViewSet):
 class ChangePasswordApi(ViewSet):
 
     def create(self, request):
-        print(request.user.email)
         serializer = ChangePasswordSerializer(
             data=request.data, context={"user_email": request.user.email}
         )
@@ -153,41 +147,3 @@ class StateApi(CustomViewSet):
     serializer_class = StateSerializer
     queryset = State.objects.all()
     
-        # serializer = LoginSerializer(data=request.data)
-        # if serializer.is_valid():
-        #     email = serializer.validated_data["email"]
-        #     print("----------->>>>", email)
-        #     password = serializer.validated_data["password"]
-        #     print("----------->>>>", password)
-        #     user = authenticate(email=email, password=password)
-        #     print("----------->>>>", user)
-        #     if user:
-        #         # if not user.mobile_verify:
-        #         #     return Response(
-        #         #         {"message": "mobile number is not verified"},
-        #         #         status=status.HTTP_200_OK,
-        #         #    )
-        #         if not user.email_verify:
-        #             return Response(
-        #                 {"message": "Email is not verified"}, status=status.HTTP_200_OK
-        #             )
-        #         user_serializer = UserDepthSerializer(user, context={"request": request})
-        #         if request.data.get("fcm_token"):
-        #             user.fcm_token = request.data.get("fcm_token")
-        #             user.save()
-        #         token = get_tokens_for_user(user)
-        #         response = user_serializer.data
-        #         response["token"] = token
-        #         return Response(response, status=status.HTTP_200_OK)
-        #     return Response(
-        #         {"message": "Invalid Email or Password"},
-        #         status=status.HTTP_400_BAD_REQUEST,
-        #     )
-        # else:
-        #     return Response({"error":"invalid data"}, status=status.HTTP_400_BAD_REQUEST)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-# ________test___change_____
