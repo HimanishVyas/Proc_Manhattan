@@ -80,9 +80,11 @@ class AddHallAPI(CustomViewSet):
         if hall_serializer.is_valid(raise_exception=True):
             hall_serializer.save()
 
-            hall = Hall.objects.all().last().id
+            # hall_id = Hall.objects.all().last().id
+            hall = Hall.objects.all().last()
             print("Hall ------>>>", hall)
-            create_package(hall=hall)
+            create_package(hall)
+            # create_package(hall=hall)
 
             response = {
                 "message": "Hall Registered",
