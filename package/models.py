@@ -86,7 +86,7 @@ class Catress(models.Model):
 
 
 class Package(models.Model):
-    hall_fk = models.ForeignKey(Hall, verbose_name="Hall", on_delete=models.CASCADE, related_name="Hall")
+    hall_fk = models.ForeignKey(Hall, verbose_name="Hall", on_delete=models.CASCADE, related_name="hall_package")
     catress_fk = models.ForeignKey(Catress, verbose_name="Catress", on_delete=models.CASCADE, related_name="Catress")
     package_price = models.FloatField(verbose_name="Package Price", null=True, blank=True)  # Sum of all venders price
     package_type = models.PositiveSmallIntegerField(_("Package Type"),
