@@ -41,20 +41,21 @@ class Util:
         print(email)
         email.send()
 
+# currently not worring due to tiwilio
 
-def send_otp_via_phone(mobile):
-    print("mobile ----- >>>>", mobile)
-    account_sid = os.getenv("account_sid")
-    auth_token = os.getenv("auth_token")
-    client = Client(account_sid, auth_token)
-    phone_number = mobile
-    my_otp = random.randint(1111, 9999)
-    client.messages.create(
-        body=f"Your one time password to proceed on manhattan is {my_otp}. Do not share your OTP with anyone.",
-        from_=os.getenv("twilio_no"),
-        to=f"{phone_number}",
-    )
-    return my_otp
+# def send_otp_via_phone(mobile):
+#     print("mobile ----- >>>>", mobile)
+#     account_sid = os.getenv("account_sid")
+#     auth_token = os.getenv("auth_token")
+#     client = Client(account_sid, auth_token)
+#     phone_number = mobile
+#     my_otp = random.randint(1111, 9999)
+#     client.messages.create(
+#         body=f"Your one time password to proceed on manhattan is {my_otp}. Do not share your OTP with anyone.",
+#         from_=os.getenv("twilio_no"),
+#         to=f"{phone_number}",
+#     )
+#     return my_otp
 
 
 def genrate_otp():
